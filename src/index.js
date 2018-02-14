@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+var availablePlaces = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+var newPlace = [];
+
 class Score extends React.Component {
 	render(){
 		return(
@@ -21,8 +24,8 @@ class Square extends React.Component {
   render() {
     return (
       <button className="square" onClick={() => 
-      	  this.setState({value: parseInt(this.state.value) * 2, isEmpty: false})}>
-        {this.state.value}
+      	  this.setState({value: parseInt(this.state.value, 10) * 2, isEmpty: 0})}>
+        {newPlace.indexOf(parseInt(this.state.value, 10)) !== -1 ? Math.floor(Math.random() * 2) + 1 : ""}
       </button>
     );
   }
@@ -34,7 +37,6 @@ class Board extends React.Component {
   }
 
   render() {
-
     return (
       <div>
         <div className="board-row">
@@ -68,11 +70,15 @@ class Board extends React.Component {
 
 class Game extends React.Component {
   render() {
+  	var tmp = Math.floor(Math.random() * availablePlaces.length);
+  	newPlace.push(availablePlaces.splice(tmp,1)[0]);
+  	tmp = Math.floor(Math.random() * availablePlaces.length);
+  	newPlace.push(availablePlaces.splice(tmp,1)[0]);
     return (
       <div className="game">
         <div className="game-board">
 	  	  <div className="game-info">
-	        <Score score="10"/>
+	        {/* < Score score="10"/ > */}
           </div>
           <Board />
         </div>
