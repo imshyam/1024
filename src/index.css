@@ -19,13 +19,13 @@ ol, ul {
   float: left;
   font-size: 24px;
   font-weight: bold;
-  line-height: 80px;
-  height: 80px;
+  line-height: 34px;
+  height: 34px; /* 80px for all */
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 80px;
+  width: 34px;
 }
 
 .square:focus {
@@ -40,10 +40,10 @@ ol, ul {
   display: flex;
   flex-direction: row;
   position: absolute;
-  top:0;
+  /*top:0;
   bottom: 0;
   left: 0;
-  right: 0;
+  right: 0;*/
   margin: auto;
 }
 
