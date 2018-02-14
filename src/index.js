@@ -2,7 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-var availablePlaces = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+var availablePlaces = [0, 1, 2, 3,10, 11, 12, 13, 20, 21, 22, 23, 30, 31, 32, 33];
+var values = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+  ];
 var newPlace = [];
 
 class Score extends React.Component {
@@ -18,14 +24,13 @@ class Square extends React.Component {
   	super(props);
   	this.state = {
   		value: props.value,
-  		isEmpty: props.isEmpty,
   	}
   }
   render() {
     return (
       <button className="square" onClick={() => 
-      	  this.setState({value: parseInt(this.state.value, 10) * 2, isEmpty: 0})}>
-        {newPlace.indexOf(parseInt(this.state.value, 10)) !== -1 ? Math.floor(Math.random() * 2) + 1 : ""}
+      	  this.setState({value: parseInt(this.state.value, 10) * 2})}>
+        {parseInt(this.state.value, 10) !== 0 ? this.state.value : ""}
       </button>
     );
   }
@@ -33,36 +38,28 @@ class Square extends React.Component {
 
 class Board extends React.Component {
   renderSquare(i) {
-    return <Square value={i} isEmpty="0"/>;
+    return <Square value={i}/>;
+  }
+
+  renderRow(i) {
+  	return (
+      <div className="board-row" key={i}>
+        {this.renderSquare(values[i][0])}
+        {this.renderSquare(values[i][1])}
+        {this.renderSquare(values[i][2])}
+        {this.renderSquare(values[i][3])}
+      </div>
+  	);
   }
 
   render() {
+  	var rows = [];
+  	for(var i = 0; i < 4; i++){
+  		rows.push(this.renderRow(i))
+  	}
     return (
       <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-          {this.renderSquare(3)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(8)}
-          {this.renderSquare(9)}
-          {this.renderSquare(10)}
-          {this.renderSquare(11)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(12)}
-          {this.renderSquare(13)}
-          {this.renderSquare(14)}
-          {this.renderSquare(15)}
-        </div>
+        {rows}
       </div>
     );
   }
@@ -71,9 +68,14 @@ class Board extends React.Component {
 class Game extends React.Component {
   render() {
   	var tmp = Math.floor(Math.random() * availablePlaces.length);
-  	newPlace.push(availablePlaces.splice(tmp,1)[0]);
+  	var i = availablePlaces.splice(tmp,1)[0];
+  	console.log("i : " + i);
+  	values[parseInt(i/10, 10)][i%10] = Math.floor(Math.random() * 2) + 1;
   	tmp = Math.floor(Math.random() * availablePlaces.length);
-  	newPlace.push(availablePlaces.splice(tmp,1)[0]);
+  	i = availablePlaces.splice(tmp,1)[0];
+  	console.log("i : " + i);
+  	values[parseInt(i/10, 10)][i%10] = Math.floor(Math.random() * 2) + 1;
+  	console.log(values);
     return (
       <div className="game">
         <div className="game-board">
