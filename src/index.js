@@ -70,40 +70,33 @@ class Game extends React.Component {
   
   constructor(props) {
     super(props)
+    function fillVal(){
+    	var tmp = Math.floor(Math.random() * availablePlaces.length);
+	  	var i = availablePlaces.splice(tmp,1)[0];
+	  	values[parseInt(i/10, 10)][i%10] = Math.floor(Math.random() * 2) + 1;
+	  	document.getElementById('c_' + parseInt(i/10, 10).toString() + (i%10).toString()).innerHTML = values[parseInt(i/10, 10)][i%10];
+    }
     function checkKey(e) {
 	    var event = window.event ? window.event : e;
 	    if (event.keyCode === 37) { // Left Key
 	    	console.log("Left");
-	    }
+	    	fillVal()
+		}
 	    if (event.keyCode === 38) { // Up Key
 	    	console.log("Up");
+	    	fillVal()
 	    }
 	    if (event.keyCode === 39) { // Right Key
 	    	console.log("Right");
+	    	fillVal()
 	    }
 	    if (event.keyCode === 40) { // Down Key
 	    	console.log("Down");
+	    	fillVal()
 	    }
 	}
-
 	document.onkeydown = checkKey;
-    this.handleKeyDown = this.handleKeyDown.bind(this)
-    this.state = {
-      cursor: 0,
-      result: []
-    }
   }
-
-  handleKeyDown(e) {
-    const { cursor, result } = this.state
-    // arrow up/down button should select next/previous list element
-    if (e.key === 38 && cursor > 0) {
-        console.log("UP")
-    } else if (e.key === 40 && cursor < result.length - 1) {
-      console.log("Down")
-    }
-  }
-
   render() {
   	// 1st value on game start
   	var tmp = Math.floor(Math.random() * availablePlaces.length);
@@ -115,7 +108,7 @@ class Game extends React.Component {
   	values[parseInt(i/10, 10)][i%10] = Math.floor(Math.random() * 2) + 1;
 
     return (
-      <div className="game" onKeyDown = { this.handleKeyDown } tabIndex="0">
+      <div className="game">
         <div className="game-board">
 	  	  <div className="game-info">
 	        {/* < Score score="10"/ > */}
